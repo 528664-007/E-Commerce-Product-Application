@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}SaNeMart{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script>
+      // Your Firebase config here
+      const firebaseConfig = {
+          apiKey: "AIzaSyCK7UVW-JSJ1f4d-jmbZu0fAwi4MMdsM2Y",
+            authDomain: "universitycall.firebaseapp.com",
+            projectId: "universitycall",
+            storageBucket: "universitycall.firebasestorage.app",
+            messagingSenderId: "654742801296",
+            appId: "1:654742801296:web:f4f31e6b7d14d237684115",
+            measurementId: "G-3QFPMX19C0"
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+</head>
+<body>
+
+<header>
+    <h1>
+        <a href="{{ url_for('main.home') }}" style="color: white; text-decoration: none;">SaNeMart</a>
+    </h1>
+
+    <form action="{{ url_for('main.search') }}" method="get" class="search-form">
+        <input type="text" name="query" placeholder="Search products..." required />
+        <button type="submit">Search</button>
+    </form>
+
+    <nav id="nav-auth">
+        <a href="{{ url_for('main.cart') }}">Cart</a> |
+        <span id="user-info"></span>
+    </nav>
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<script>
+  // On page load, update nav based on Firebase auth status or sessionStorage
+  document.addEventListener('DOMContentLoaded', () => {
+    const userInfoSpan = document.getElementById('user-info');
+
+    // Check Firebase auth state
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        // Show welcome and logout
+        userInfoSpan.innerHTML = `
+          Welcome, ${user.displayName || user.email} |
+          <a href="#" id="logout-link">Logout</a>
+        `;
+
+        document.getElementById('logout-link').addEventListener('click', async (e) => {
+          e.preventDefault();
+          await firebase.auth().signOut();
+          sessionStorage.clear();
+          window.location.href = "{{ url_for('main.home') }}";
+        });
+
+      } else {
+        // Show login/register links
+        userInfoSpan.innerHTML = `
+          <a href="{{ url_for('main.login') }}">Login</a> |
+          <a href="{{ url_for('main.register') }}">Register</a>
+        `;
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SaNeMart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --bg-header: #1f1f1f;
+            --primary-color: #2a55e5;
+            --accent-color: #f5c424;
+            --text-light: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --border-radius: 10px;
+            --nav-link-hover: #2a55e5;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            line-height: 1.75;
+            font-size: 17px;
+        }
+
+        header {
+            background-color: var(--bg-header);
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.7);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--nav-link-hover);
+        }
+
+        .product-detail {
+            background: linear-gradient(145deg, #222222, #181818);
+            margin: 40px auto;
+            padding: 40px 45px;
+            width: 90%;
+            max-width: 700px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 6px 20px rgba(42, 85, 229, 0.5);
+        }
+
+        .product-detail h2 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 28px;
+            color: var(--text-light);
+            letter-spacing: 0.6px;
+            line-height: 1.2;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 28px 0;
+        }
+
+        ul li {
+            margin-bottom: 18px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 16px;
+            font-size: 16.5px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        ul li img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+
+        ul li strong {
+            color: var(--text-light);
+            font-weight: 700;
+            font-size: 19px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        p {
+            font-size: 17px;
+            margin-top: 16px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        p strong {
+            font-weight: 700;
+        }
+
+        p.success-message {
+            margin-top: 24px;
+            color: lightgreen;
+            font-weight: 700;
+            font-size: 19px;
+            line-height: 1.4;
+        }
+
+        a.back-home {
+            display: inline-block;
+            margin-top: 36px;
+            background: var(--primary-color);
+            padding: 14px 24px;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 17px;
+            box-shadow: 0 5px 15px rgba(42, 85, 229, 0.6);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        a.back-home:hover {
+            background-color: #1747cc;
+            box-shadow: 0 6px 20px rgba(23, 71, 204, 0.9);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>SaNeMart</h1>
+    <nav>
+        <a href="{{ url_for('main.home') }}">Home</a>
+        <a href="{{ url_for('main.cart') }}">Cart</a>
+        <a href="{{ url_for('main.login') }}">Login</a>
+    </nav>
+</header>
+
+<div class="product-detail">
+    <h2>Order Summary</h2>
+    {% if cart %}
+        <ul>
+            {% for item in cart %}
+                <li>
+                    <img src="{{ item['Image URL'] }}" alt="Product Image" />
+                    <div>
+                        <strong>{{ item['ProductName'] }}</strong>
+                        Brand: {{ item['Brand'] }}<br>
+                        Category: {{ item['Category'] }}<br>
+                        Price: ₹{{ item['Price'] }}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <p><strong>Total Amount:</strong> ₹{{ total }}</p>
+        <p class="success-message">✅ Your order has been placed successfully!</p>
+    {% else %}
+        <p>Your cart was empty.</p>
+    {% endif %}
+    <a href="{{ url_for('main.home') }}" class="back-home">Back to Home</a>
+</div>
+
+</body>
+</html>

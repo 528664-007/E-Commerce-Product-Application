@@ -1,0 +1,248 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SaNeMart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --bg-header: #1f1f1f;
+            --primary-color: #2a55f9;
+            --accent-color: #f5c424;
+            --text-light: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --border-radius: 8px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        header {
+            background-color: var(--bg-header);
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.8);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            margin: 0;
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover,
+        nav a:focus {
+            color: var(--accent-color);
+            outline: none;
+        }
+
+        .product-detail {
+            max-width: 900px;
+            margin: 40px auto;
+            background: linear-gradient(145deg, #222222, #181818);
+            padding: 30px 40px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 24px rgba(42, 85, 229, 0.6);
+        }
+
+        .product-detail h1 {
+            font-size: 30px;
+            margin-bottom: 30px;
+            font-weight: 700;
+            color: var(--text-light);
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .product-card {
+            display: flex;
+            align-items: center;
+            background-color: #1c1c1c;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(42, 85, 229, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .product-card:hover,
+        .product-card:focus-within {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(42, 85, 229, 0.85);
+            outline: none;
+        }
+
+        .product-card img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            border-radius: var(--border-radius);
+            margin-right: 25px;
+            background-color: #2a2a2a;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.8);
+        }
+
+        .product-card h2 {
+            margin: 0 0 10px 0;
+            font-size: 20px;
+            color: var(--primary-color);
+            flex-grow: 1;
+        }
+
+        .product-card p {
+            margin: 4px 0;
+            font-size: 15px;
+            color: var(--text-muted);
+        }
+
+        .btn-cart {
+            padding: 10px 18px;
+            background-color: #ff4444;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            user-select: none;
+            box-shadow: 0 3px 10px rgba(255, 68, 68, 0.6);
+        }
+
+        .btn-cart:hover,
+        .btn-cart:focus {
+            background-color: #cc3a3a;
+            outline: none;
+            box-shadow: 0 5px 15px rgba(204, 58, 58, 0.9);
+        }
+
+        .product-detail > div:last-child {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            text-align: center;
+        }
+
+        .product-detail h2 {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .product-detail p {
+            font-size: 18px;
+            margin: 8px 0;
+            color: var(--text-light);
+        }
+
+        .btn-buy {
+            margin-top: 20px;
+            background: var(--accent-color);
+            color: black;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 6px 18px rgba(245, 196, 36, 0.8);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+            user-select: none;
+        }
+
+        .btn-buy:hover,
+        .btn-buy:focus {
+            background-color: #d4a419;
+            box-shadow: 0 8px 25px rgba(212, 164, 25, 1);
+            color: black;
+            outline: none;
+        }
+
+        .empty-cart-msg {
+            color: var(--text-muted);
+            font-size: 20px;
+            padding: 40px 0;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        @media (max-width: 650px) {
+            .product-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .product-card img {
+                margin-bottom: 15px;
+                margin-right: 0;
+                width: 100%;
+                max-width: 200px;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>SaNeMart</h1>
+    <nav>
+        <a href="{{ url_for('main.home') }}">Home</a>
+        <a href="{{ url_for('main.cart') }}">Cart</a>
+        <a href="{{ url_for('main.login') }}">Login</a>
+    </nav>
+</header>
+
+<div class="product-detail">
+    <h1>Your Cart</h1>
+    {% if cart and cart|length > 0 %}
+        {% for item in cart %}
+            <div class="product-card" tabindex="0">
+                <img src="{{ item.ImageURL }}" alt="{{ item.ProductName }}">
+                <div>
+                    <h2>{{ item.ProductName }}</h2>
+                    <p><strong>Brand:</strong> {{ item.Brand }}</p>
+                    <p><strong>Category:</strong> {{ item.Category }}</p>
+                    <p><strong>Price:</strong> ₹{{ item.Price }}</p>
+                    <a href="{{ url_for('main.remove_from_cart', product_id=item.ProductID) }}" class="btn-cart">Remove</a>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div>
+            <h2>Cart Summary</h2>
+            <p>Total Items: {{ cart|length }}</p>
+            <p><strong>Total Price:</strong> ₹{{ total }}</p>
+            <a href="{{ url_for('main.checkout') }}" class="btn-buy">Proceed to Checkout</a>
+        </div>
+    {% else %}
+        <p class="empty-cart-msg">Your cart is empty.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

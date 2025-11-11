@@ -1,0 +1,14 @@
+{% extends 'layouts/base.html' %}
+{% block title %}Home - FlipMart{% endblock %}
+{% block content %}
+<div class="product-container">
+    {% for product in products %}
+    <div class="product-card">
+        <img src="{{ product['Image URL'] }}" alt="product" />
+        <h2>{{ product['ProductName'] }}</h2>
+        <p>{{ product['Category'] }} | ₹{{ product['Price'] }}</p>
+        <a href="/product/{{ product['ProductID'] }}">View Product</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,505 @@
+@import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
+
+:root {
+    --primary-color: #2a55e5;
+    --accent-color: #ff9f00;
+    --bg-dark: #121212;
+    --card-dark: #1e1e1e;
+    --text-light: #ffffff;
+    --text-muted: #aaaaaa;
+    --border-radius: 10px; /* slightly more rounded */
+    --transition-speed: 0.35s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-light);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Header / Navbar */
+header {
+    background: linear-gradient(90deg, #2348e2 0%, #1b3cb8 100%);
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-light);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: saturate(180%) blur(8px);
+}
+
+header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    margin: 0 14px;
+    font-weight: 600;
+    transition: color var(--transition-speed) ease, text-shadow var(--transition-speed) ease;
+}
+
+nav a:hover {
+    color: var(--accent-color);
+    text-shadow: 0 0 8px var(--accent-color);
+}
+
+/* Search Bar */
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(145deg, #232323, #1a1a1a);
+    padding: 8px 14px;
+    border-radius: 8px;
+    box-shadow: inset 2px 2px 5px #141414, inset -2px -2px 5px #2b2b2b;
+}
+
+.search-form input[type="text"] {
+    padding: 10px 12px;
+    background: transparent;
+    border: none;
+    color: var(--text-light);
+    width: 220px;
+    font-size: 15px;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+    border-radius: 6px;
+    box-shadow: inset 1px 1px 3px #111111, inset -1px -1px 3px #292929;
+}
+
+.search-form input[type="text"]:focus {
+    box-shadow: 0 0 8px var(--primary-color);
+}
+
+.search-form button {
+    background-color: var(--accent-color);
+    border: none;
+    padding: 10px 16px;
+    color: #000;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 7px rgba(255, 159, 0, 0.6);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-form button:hover {
+    background-color: #d28700;
+    box-shadow: 0 6px 14px rgba(255, 159, 0, 0.9);
+}
+
+/* Product Grid */
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 24px;
+    padding: 36px 30px;
+}
+
+/* Slide up + fade in animation on page load */
+@keyframes slideUpFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.product-card {
+    background: linear-gradient(145deg, #232323, #1c1c1c);
+    border-radius: var(--border-radius);
+    padding: 18px 20px;
+    box-shadow: 3px 3px 6px #141414, -3px -3px 6px #2d2d2d;
+    text-align: center;
+
+    /* Animation on load */
+    animation: slideUpFadeIn 0.6s ease forwards;
+
+    /* Smooth transform & shadow transitions */
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow var(--transition-speed) ease;
+    will-change: transform, box-shadow;
+    position: relative;
+}
+
+.product-card:hover {
+    transform: translateY(-12px) scale(1.07);
+    box-shadow:
+        0 15px 30px rgba(42, 85, 229, 0.75),
+        0 10px 25px rgba(255, 159, 0, 0.65);
+    cursor: pointer;
+    z-index: 10;
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    margin-bottom: 14px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.product-card h2 {
+    font-size: 18px;
+    color: var(--text-light);
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.product-card p {
+    font-size: 14px;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+}
+
+/* Buttons in cards */
+.product-card a,
+.btn-cart,
+.btn-buy {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 12px 18px;
+    border-radius: 6px;
+    font-weight: 700;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(42, 85, 229, 0.3);
+    transition: background-color 0.35s ease, box-shadow 0.35s ease, color 0.35s ease;
+}
+
+.btn-cart {
+    background: var(--accent-color);
+    color: #000;
+    margin-right: 12px;
+    box-shadow: 0 4px 10px rgba(255, 159, 0, 0.6);
+}
+
+.btn-buy {
+    background: var(--primary-color);
+    color: #fff;
+}
+
+.btn-cart:hover {
+    background-color: #f6b20a;
+    box-shadow: 0 6px 20px rgba(246, 178, 10, 0.85);
+    color: #111;
+}
+
+.btn-buy:hover,
+.product-card a:hover {
+    background-color: #1747cc;
+    box-shadow: 0 6px 20px rgba(23, 71, 204, 0.8);
+    color: #fff;
+}
+
+/* Product Detail Page */
+.product-detail {
+    background: linear-gradient(145deg, #222222, #181818);
+    margin: 40px auto;
+    padding: 36px 40px;
+    width: 90%;
+    max-width: 900px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 6px 20px rgba(42, 85, 229, 0.5);
+}
+
+.product-detail img {
+    width: 100%;
+    max-height: 420px;
+    object-fit: contain;
+    margin-bottom: 28px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
+}
+
+.product-detail h1 {
+    margin-bottom: 14px;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--text-light);
+}
+
+.product-detail p {
+    margin: 8px 0;
+    color: var(--text-muted);
+    font-size: 16px;
+    letter-spacing: 0.02em;
+}
+
+/* Forms (Login/Register) */
+.form-container {
+    background: linear-gradient(145deg, #222222, #1a1a1a);
+    padding: 30px 32px;
+    margin: 50px auto;
+    max-width: 400px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 20px rgba(42, 85, 229, 0.5);
+}
+
+.form-container h2 {
+    margin-bottom: 28px;
+    text-align: center;
+    color: var(--text-light);
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.form-container input {
+    width: 100%;
+    padding: 14px 16px;
+    margin: 14px 0;
+    border: none;
+    border-radius: 8px;
+    background: #2d2d2d;
+    color: white;
+    font-size: 15px;
+    box-shadow: inset 1px 1px 4px #181818, inset -1px -1px 4px #383838;
+    transition: box-shadow 0.3s ease;
+}
+
+.form-container input:focus {
+    box-shadow: 0 0 10px var(--primary-color);
+    outline: none;
+}
+
+.form-container button {
+    width: 100%;
+    padding: 14px 0;
+    background: var(--primary-color);
+    color: white;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 18px;
+    transition: background var(--transition-speed) ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 16px rgba(42, 85, 229, 0.6);
+}
+
+.form-container button:hover {
+    background: #1747cc;
+    box-shadow: 0 6px 20px rgba(23, 71, 204, 0.9);
+}
+
+/* Cart & Checkout */
+.cart-summary {
+    text-align: right;
+    margin: 24px 30px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent-color);
+    letter-spacing: 0.03em;
+}
+
+.cart-actions {
+    margin-top: 24px;
+    text-align: center;
+}
+
+/* Footer */
+footer {
+    background: linear-gradient(145deg, #222222, #181818);
+    color: var(--text-muted);
+    text-align: center;
+    padding: 24px 20px;
+    margin-top: 60px;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .product-container {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+
+    .search-form input[type="text"] {
+        width: 140px;
+    }
+
+    header {
+        padding: 15px 20px;
+    }
+
+    .product-detail {
+        padding: 25px 20px;
+    }
+
+    .form-container {
+        padding: 25px 20px;
+        margin: 30px 15px;
+    }
+}
+
+/* Additional Button Styles */
+.btn-cart, .btn-buy {
+    display: inline-block;
+    padding: 12px 24px;
+    margin-right: 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+.btn-cart {
+    background-color: var(--accent-color);
+    color: #000;
+    box-shadow: 0 4px 12px rgba(255, 159, 0, 0.7);
+}
+
+.btn-buy {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 12px rgba(42, 85, 229, 0.7);
+}
+
+.btn-cart:hover {
+    background-color: #f6b20a;
+    box-shadow: 0 6px 22px rgba(246, 178, 10, 0.9);
+    color: #111;
+}
+
+.btn-buy:hover {
+    background-color: #1747cc;
+    box-shadow: 0 6px 22px rgba(23, 71, 204, 0.9);
+    color: #fff;
+}
+/* ============================
+   Scroll Reveal Animation
+   ============================ */
+@keyframes scrollFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(60px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(60px) scale(0.9);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, transform;
+}
+
+/* Apply animation when in view */
+.scroll-reveal.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* ============================
+   Enhanced Hover Styling
+   ============================ */
+.product-card {
+    position: relative;
+    transition: all 0.4s ease-in-out;
+    overflow: hidden;
+}
+
+.product-card:hover {
+    transform: scale(1.07) rotate(-1.2deg);
+    box-shadow: 0 18px 42px rgba(255, 214, 227, 0.4), 0 8px 16px rgba(102,178,255,0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.product-card:hover img {
+    transform: scale(1.15) rotate(-2deg);
+    filter: brightness(1.1) contrast(1.05);
+}
+
+.product-card h2,
+.product-card p {
+    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.product-card:hover h2 {
+    color: #ffcc70;
+    transform: translateY(-4px);
+}
+
+.product-card:hover p {
+    color: #ffffff;
+    transform: translateY(2px);
+}
+/* ============================
+   Additional Page-Level Animation
+   ============================ */
+@keyframes fadePageIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body {
+    animation: fadePageIn 0.8s ease-out both;
+}
+
+/* ============================
+   Product Card Glow Effect on Hover
+   ============================ */
+.product-card:hover {
+    box-shadow:
+        0 0 10px rgba(255, 159, 0, 0.6),
+        0 0 15px rgba(42, 85, 229, 0.7),
+        0 12px 28px rgba(0, 0, 0, 0.6);
+    transform: translateY(-14px) scale(1.08);
+    transition: all 0.35s ease;
+}
+
+/* Floating Shine Animation */
+.product-card::after {
+    content: "";
+    position: absolute;
+    top: -120%;
+    left: -120%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.05) 50%, transparent 70%);
+    transform: rotate(25deg);
+    animation: shine 2s infinite;
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+@keyframes shine {
+    0% {
+        transform: rotate(25deg) translateX(-100%);
+    }
+    100% {
+        transform: rotate(25deg) translateX(100%);
+    }
+}
+
